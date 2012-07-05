@@ -28,8 +28,6 @@ public class MST {
 			String id = source + "->" + destination;
 			String weight = parts[2];
 			
-			
-			
 			Edge edge = new Edge(id, graph.addVertex(source), graph.addVertex(destination), 
 					Double.parseDouble(weight));
 			graph.addEdge(edge);
