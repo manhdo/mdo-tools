@@ -3,8 +3,8 @@ package com.mdo.algorithms.ds;
 
 public class LinkedListDictionary implements IDictionary {
 
-	private LinkedNode head;
-	private LinkedNode tail;
+	private LinkedNode<DataNode> head;
+	private LinkedNode<DataNode> tail;
 	private int count;
 	
 	public LinkedListDictionary() {
@@ -12,7 +12,7 @@ public class LinkedListDictionary implements IDictionary {
 	}
 	
 	public void add(String key, Object data) {
-		LinkedNode node = new LinkedNode(data);
+		LinkedNode<DataNode>  node = new LinkedNode<DataNode>(new DataNode(key,data));
 		if (head == null) {
 			// instantiate head
 			head = node;
@@ -29,11 +29,11 @@ public class LinkedListDictionary implements IDictionary {
 	}
 
 	public void delete(String key) {
-		LinkedNode node = findNode(key);
+		LinkedNode<DataNode> node = findNode(key);
 		if (node != null) {
 			count--;
-			LinkedNode prev = node.getPrev();
-			LinkedNode next = node.getNext();
+			LinkedNode<DataNode> prev = node.getPrev();
+			LinkedNode<DataNode> next = node.getNext();
 			if (prev != null) {
 				prev.setNext(next);
 			}
@@ -44,9 +44,8 @@ public class LinkedListDictionary implements IDictionary {
 	}
 
 	public Object get(String key) {
-		// TODO Auto-generated method stub
-		LinkedNode node = findNode(key);
-		return node.getData();
+		LinkedNode<DataNode> node = findNode(key);
+		return node.getData().getData();
 	}
 	
 	public int getCount() {
@@ -54,13 +53,13 @@ public class LinkedListDictionary implements IDictionary {
 	}
 	
 	
-	private LinkedNode findNode(String key) {
-		LinkedNode currentNode = head;
+	private LinkedNode<DataNode> findNode(String key) {
+		LinkedNode<DataNode> currentNode = head;
 		
 		// Iterate through the linked list
 		while(currentNode != null) {
 			
-			if (currentNode.getName().equals(key)) {
+			if (currentNode.getData().getName().equals(key)) {
 				return currentNode;
 			}
 			currentNode = currentNode.getNext();

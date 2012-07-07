@@ -1,46 +1,36 @@
 package com.mdo.algorithms.ds;
 
 // Doubly LinkedList
-public class LinkedNode {
-	private String name;
-	private Object data;
-	private LinkedNode next;
-	private LinkedNode prev;
+public class LinkedNode<T> {
+	private T data;
+	private LinkedNode<T> next;
+	private LinkedNode<T> prev;
 	
-	public LinkedNode(Object data) {
-	}
-
-	public Object getData() {
-		return data;
-	}
-
-	public void setData(Object data) {
+	public LinkedNode(T data) {
 		this.data = data;
 	}
 
-	public LinkedNode getNext() {
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
+
+	public LinkedNode<T> getNext() {
 		return next;
 	}
 
-	public void setNext(LinkedNode next) {
+	public void setNext(LinkedNode<T> next) {
 		this.next = next;
 	}
 
-	public LinkedNode getPrev() {
+	public LinkedNode<T> getPrev() {
 		return prev;
 	}
 
-	public void setPrev(LinkedNode prev) {
+	public void setPrev(LinkedNode<T> prev) {
 		this.prev = prev;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	
 }
