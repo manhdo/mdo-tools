@@ -33,29 +33,49 @@ public class BinaryTree {
 	}
 	
 	public void addItemToTree(DataNode item) {
-		Queue<BinaryNode<DataNode>> queue = new ConcurrentLinkedQueue<BinaryNode<DataNode>>();
-	}
-	
-	/*
-	public BinaryNode<T> getNode(T item) throws Exception {
-		if (data.equals(item)) return this;
+		BinaryNode<DataNode> curNode = root;
 		
-		int result = data.compareTo(item);
-		if (result == RIGHT) {
-			if (right != null) {
-				return right.getNode(item);
+		// add the item to the tree
+		while(curNode != null) {
+			DataNode dataNode = curNode.getData();
+			int result = item.compareTo(dataNode);
+			if (result == 1) {
+				// right
+				if (curNode.getRight() != null) {
+					curNode = curNode.getRight();
+				} else {
+					curNode.setRight(new BinaryNode<DataNode>(item));
+					curNode = null;
+				}
 			} else {
-				// Throw error
-				throw new Exception("No such node with key: " + item);
-			}
-		} else {
-			if (left != null) {
-				return left.getNode(item);
-			} else {
-				throw new Exception("No such node with key: " + item);
+				// left and center
+				if (curNode.getLeft() != null) {
+					curNode = curNode.getLeft();
+				} else {
+					curNode.setLeft(new BinaryNode<DataNode>(item));
+					curNode = null;
+				}
 			}
 		}
 	}
-	*/
+	
+	
+	public BinaryNode<DataNode> getNode(DataNode item) throws Exception {
+		BinaryNode<DataNode> curNode = root;
+		if (item == null) return null;
+		
+		while (curNode != null) {
+			DataNode dataNode = curNode.getData();
+			if (item.equals(dataNode)) return curNode;
+			
+			int result = item.compareTo(dataNode);
+			if (result == 1) {
+				curNode = curNode.getRight();
+			} else {
+				curNode = curNode.getLeft();
+			}
+		}
+		return null;
+	}
 	
 }
