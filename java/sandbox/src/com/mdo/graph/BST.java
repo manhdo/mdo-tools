@@ -17,6 +17,11 @@ public class BST {
 		
 		BinaryNode<DataNode> root = tree.getRoot();
 		
+		
+		DataNode b = tree.getItem(new DataNode("B","abccd"));
+		BinaryNode bNode = tree.getNode(new DataNode("B",null));
 		System.out.println(root);
+		
+		
 	}
 }

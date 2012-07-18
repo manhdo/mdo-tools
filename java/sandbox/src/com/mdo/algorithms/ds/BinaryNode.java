@@ -1,6 +1,6 @@
 package com.mdo.algorithms.ds;
 
-public class BinaryNode<T extends Comparable> {
+public class BinaryNode<T extends Comparable<T>> {
 	static int LEFT = -1;
 	static int RIGHT = 1;
 	static int EQUAL = 0;
@@ -8,6 +8,7 @@ public class BinaryNode<T extends Comparable> {
 	private T data;
 	private BinaryNode<T> left;
 	private BinaryNode<T> right;
+	private BinaryNode<T> parent;
 	
 	public BinaryNode(T data) {
 		this.data = data;
@@ -35,5 +36,13 @@ public class BinaryNode<T extends Comparable> {
 
 	public void setRight(BinaryNode<T> right) {
 		this.right = right;
+	}
+
+	public BinaryNode<T> getParent() {
+		return parent;
+	}
+
+	public void setParent(BinaryNode<T> parent) {
+		this.parent = parent;
 	}
 }
