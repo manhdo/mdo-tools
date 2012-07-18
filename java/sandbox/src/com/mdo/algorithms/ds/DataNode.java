@@ -1,6 +1,6 @@
 package com.mdo.algorithms.ds;
 
-public class DataNode implements Comparable{
+public class DataNode implements Comparable<DataNode>{
 	
 	private String name;
 	private Object data;
@@ -47,7 +47,7 @@ public class DataNode implements Comparable{
 	}
 
 	@Override
-	public int compareTo(Object other) {
+	public int compareTo(DataNode other) {
 		if (other == null || (other.getClass() != this.getClass())) 
 			return 1;
 		
