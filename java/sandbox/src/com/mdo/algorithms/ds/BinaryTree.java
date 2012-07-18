@@ -66,8 +66,7 @@ public class BinaryTree<T extends Comparable<T>> {
 				// they are equal to ignore for this implementation
 				currentNode = null;
 			}
+		
 		}
 	}
-	
-	
 }
