@@ -57,5 +57,7 @@ public class DataNode implements Comparable<DataNode>{
 		return name.compareTo(node.name);
 	}
 	
-	
+	public String toString() {
+		return name;
+	}
 }

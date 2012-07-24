@@ -1,5 +1,10 @@
 package com.mdo.algorithms.ds;
 
+import java.util.HashMap;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 
 public class BinaryTree<T extends Comparable<T>> {
 	private BinaryNode<T> root;
@@ -58,7 +63,7 @@ public class BinaryTree<T extends Comparable<T>> {
 		
 		BinaryNode<T> currentNode = root;
 		while(currentNode != null) {
-			int cmpResult = currentNode.getData().compareTo(item);
+			int cmpResult = item.compareTo(currentNode.getData());
 			if (cmpResult > 0) {
 				// cmpResult is greater
 				BinaryNode<T> right = currentNode.getRight();
@@ -100,7 +105,6 @@ public class BinaryTree<T extends Comparable<T>> {
 				// cmpResult is greater
 				BinaryNode<T> right = currentNode.getRight();
 				if (right == null) {
-					currentNode.setRight(new BinaryNode<T>(item));
 					break;
 				} else {
 					currentNode = right;
@@ -109,7 +113,6 @@ public class BinaryTree<T extends Comparable<T>> {
 				// just add to left
 				BinaryNode<T> left = currentNode.getLeft();
 				if (left == null) {
-					currentNode.setLeft(new BinaryNode<T>(item));
 					break;
 				} else {
 					currentNode = left;
@@ -122,6 +125,64 @@ public class BinaryTree<T extends Comparable<T>> {
 		return null;
 	}
 	
-	public void printTreeDijstra() {
+	public void printPreOrder() {
+		Stack<BinaryNode<T>> stack = new Stack<BinaryNode<T>>();
+		//stack.push(root);
+		
+		HashMap<String,String> visited = new HashMap<String,String>();
+		stack.push(root);
+		while(!stack.isEmpty()) {
+			BinaryNode<T> currentNode = stack.peek();
+			
+			BinaryNode<T> right = currentNode.getRight();
+			BinaryNode<T> left = currentNode.getLeft();
+			
+			if (left == null || visited.containsKey(left.toString())) {
+				visited.put(currentNode.toString(), null);
+				System.out.println(currentNode.getData().toString());
+				
+				stack.pop();
+				if (right != null) {
+					//System.out.println("right");
+					stack.push(right);
+				}
+			} else {
+				//System.out.println("left");
+				stack.push(left);
+			}
+		}
+	}
+	
+	
+	private void printPreOrderRe(BinaryNode<T> currentNode) {
+		if (currentNode == null) return;
+		
+		printPreOrderRe(currentNode.getLeft());
+		System.out.println(currentNode.getData().toString());
+		printPreOrderRe(currentNode.getRight());
+	}
+	
+	public void printPreOrderRecurse() {
+		printPreOrderRe(root);
+	}
+	
+	public void printBreathFirst() {
+		Queue<BinaryNode<T>> queue = new ConcurrentLinkedQueue<BinaryNode<T>>();
+		queue.add(root);
+		
+		while(!queue.isEmpty()) {
+			BinaryNode<T> currentItem = queue.remove();
+			System.out.println(currentItem.getData().toString());
+
+			
+			// push left
+			if (currentItem.getLeft() != null) {
+				queue.add(currentItem.getLeft());
+			}
+			// push right first
+			if (currentItem.getRight() != null) {
+				queue.add(currentItem.getRight());
+			}
+		}
 	}
 }

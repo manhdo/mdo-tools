@@ -19,9 +19,16 @@ public class BST {
 		
 		
 		DataNode b = tree.getItem(new DataNode("B","abccd"));
-		BinaryNode bNode = tree.getNode(new DataNode("B",null));
-		System.out.println(root);
+		//BinaryNode bNode = tree.getNode(new DataNode("B",null));
+		//System.out.println(root);
 		
+		System.out.println("breath first");
+		tree.printBreathFirst();
+		System.out.println("depth first");
+		tree.printPreOrder();
+		
+		System.out.println("depth first rec");
+		tree.printPreOrderRecurse();
 		
 	}
 }
