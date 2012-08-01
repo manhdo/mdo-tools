@@ -34,17 +34,11 @@ public class UVAProblem {
 	}
 	
 	public static void main(String[] args) {
-		
-		
 		Scanner in = new Scanner(System.in);
 		while(in.hasNext()) {
 			String line = in.nextLine();
 			String[] parts = line.split(" ");
 			threenPlusOne(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]));
 		}
-		/*threenPlusOne(1,10);
-		threenPlusOne(100,200);
-		threenPlusOne(201,210);
-		threenPlusOne(900,1000);*/
 	}
 }
