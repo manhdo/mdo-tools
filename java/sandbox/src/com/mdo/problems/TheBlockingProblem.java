@@ -102,7 +102,7 @@ public class TheBlockingProblem {
 		// initialize
 		while (in.hasNextLine()) {
 			line = in.nextLine();
-			System.out.println(line);
+			//System.out.println(line);
 			String[] parts = line.split(" ");
 			String cmd = parts[0];
 			
@@ -127,7 +127,7 @@ public class TheBlockingProblem {
 				sendTopBlocksHome(world, movingBlock);
 			}
 			
-			if (cmd.equals("onto")) {
+			if (moveType.equals("onto")) {
 				// return the children of target
 				sendTopBlocksHome(world, targetBlock);
 			}
@@ -135,6 +135,17 @@ public class TheBlockingProblem {
 			addToTopOfStack(world,movingBlock, targetBlock);
 		}
 		
-		System.out.println("hello");
+		
+		// Output the result
+		for(int i = 0; i < world.length; i++) {
+			System.out.print(i + ":");
+
+			Block block = world[i];
+			while (block != null) {
+				System.out.print(" " + block.id);
+				block = block.above;
+			}
+			System.out.print("\n");
+		}
 	}
 }
