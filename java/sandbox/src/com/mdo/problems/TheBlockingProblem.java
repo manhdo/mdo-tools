@@ -1,8 +1,7 @@
 package com.mdo.problems;
 
+import java.io.InputStream;
 import java.util.Scanner;
-
-import com.mdo.problems.TheBlockingProblem.Block;
 
 
 public class TheBlockingProblem {
@@ -11,6 +10,7 @@ public class TheBlockingProblem {
 		Onto
 	}
 	
+	// Simple Block node
 	static class Block {
 		// In this scenario, id == index
 		int id;
@@ -19,13 +19,14 @@ public class TheBlockingProblem {
 		}
 		
 		// block that is directly on top of this one
-		Block child;
+		Block above;
+		Block below;
 	}
 	
 	private static Block[] createWorld(int worldSize) {
 		Block[] world = new Block[worldSize];
 		for(int i = 0; i < world.length; i++) {
-			world[i] = new Block(0);
+			world[i] = new Block(i);
 		}
 		return world;
 	}
@@ -36,7 +37,7 @@ public class TheBlockingProblem {
 			if (currentBlock.id == id) return currentBlock;
 			
 			// look at the child
-			currentBlock = currentBlock.child;
+			currentBlock = currentBlock.above;
 		}
 		return null;
 	}
@@ -50,14 +51,58 @@ public class TheBlockingProblem {
 		return foundBlock;
 	}
 	
+	private static void sendTopBlocksHome(Block[] world, Block block) {
+		Block current = block.above;
+		block.above = null;
+		while (current != null) {
+			world[current.id] = current;
+			current.below = null;
+			Block tmp = current;
+			current = current.above;
+			tmp.above = null;
+		}
+	}
+	
+	private static Block findBottomBlock(Block block) {
+		Block c = block;
+		while (c.below != null) {
+			c = c.below;
+		}
+		
+		return c;
+	}
+	
+	private static void addToTopOfStack(Block[] world, Block victim, Block target) {
+		if (world[victim.id] == victim) {
+			world[victim.id] = null;
+		} else {
+			// not top of stack
+			if (victim.below != null) {
+				victim.below.above = null;
+			}
+			victim.below = null;
+		}
+		
+		Block topBlock = target;
+		while(topBlock.above != null) {
+			topBlock = topBlock.above;
+		}
+
+		topBlock.above = victim;
+		victim.below = topBlock;
+	}
+	
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
+		InputStream inputStream= TheBlockingProblem.class.getResourceAsStream("input.data");
+		//Scanner in = new Scanner(System.in);
+		Scanner in = new Scanner(inputStream);
 		
 		String line = in.nextLine();
 		Block[] world = createWorld(Integer.parseInt(line));
 		// initialize
 		while (in.hasNextLine()) {
 			line = in.nextLine();
+			System.out.println(line);
 			String[] parts = line.split(" ");
 			String cmd = parts[0];
 			
@@ -68,18 +113,28 @@ public class TheBlockingProblem {
 			int target = Integer.parseInt(parts[3]);
 			
 			// Find victim
-			Block victimBlock = findBlock(world,victim);
+			Block movingBlock = findBlock(world,victim);
 			Block targetBlock = findBlock(world,target);
 			
-
+			Block movingRoot = findBottomBlock(movingBlock);
+			Block targetRoot = findBottomBlock(targetBlock);
+			
+			if (movingRoot.id == targetRoot.id) continue; 
+			
+			
 			if (cmd.equals("move")) {
 				// return the children of victims
+				sendTopBlocksHome(world, movingBlock);
 			}
 			
 			if (cmd.equals("onto")) {
 				// return the children of target
+				sendTopBlocksHome(world, targetBlock);
 			}
+			
+			addToTopOfStack(world,movingBlock, targetBlock);
 		}
 		
+		System.out.println("hello");
 	}
 }
