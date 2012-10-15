@@ -31,3 +31,4 @@ _ReSharper*/
 
 #largeEWG.txt
 *EWG.txt
+*.DS_Store
